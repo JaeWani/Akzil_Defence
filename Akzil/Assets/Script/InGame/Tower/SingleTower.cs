@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class SingleTower : TowerBase
 {
-    
+    private void Update()
+    {
+        base.Update();
+    }
 }

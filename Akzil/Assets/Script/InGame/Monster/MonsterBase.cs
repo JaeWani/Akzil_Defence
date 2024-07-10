@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class MonsterBase : MonoBehaviour
 {
-    public float speed;
-    [SerializeField] private Vector2 direction = Vector2.up;
-    private Rigidbody2D rb;
 
+    #region Variable
+
+    private Rigidbody2D rb;
+    [SerializeField] private Vector2 direction = Vector2.up;
+
+    public float moveDistance = 0;
+
+    [Header ("Stat")]
+    public float moveSpeed;
+    public float health;
+
+    #endregion
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -16,6 +25,8 @@ public class MonsterBase : MonoBehaviour
     private void Update()
     {
         Move();
+        moveDistance += rb.velocity.x * Time.deltaTime;
+        moveDistance += rb.velocity.y * Time.deltaTime;
     }
     
     private void Move()
@@ -23,6 +34,6 @@ public class MonsterBase : MonoBehaviour
         if (transform.position == new Vector3(-2.5f, -0.5f)) direction = Vector2.right;
         else if (transform.position == new Vector3(2.5f, -0.5f)) direction = Vector2.down;
 
-        rb.velocity = direction * speed;
+        rb.velocity = direction * moveSpeed;
     }
 }
