@@ -54,7 +54,7 @@ public class TowerBase : MonoBehaviour
 
             if(colls[i].GetComponent<MonsterBase>() == targetObject) inCircle = true;
         }
-
+        if(!inCircle) targetObject = null;
         foreach (var item in mobs)
         {
             if (targetObject == null) targetObject = item;
