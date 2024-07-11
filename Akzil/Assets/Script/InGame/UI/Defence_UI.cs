@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameUI : MonoBehaviour
+public class Defence_UI : MonoBehaviour
 {
     #region Variable
-    public static InGameUI Instance { get; private set; }
+    public static Defence_UI Instance { get; private set; }
 
     private Camera mainCamera;
 
@@ -20,6 +20,8 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private Button DebuffAttack;
     [SerializeField] private Button BuffAttack;
     [SerializeField] private Button RangeAttack;
+
+
     #endregion
     #region Prefab Variable
     [Header("Prefab")]
@@ -39,7 +41,14 @@ public class InGameUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        EnableTowerPanel();
+    }
+    #endregion
+
+    #region Function
+    private void EnableTowerPanel()
+    {
+        if (Input.GetMouseButtonDown(0) && GameManager.CurrentTurn == TurnState.DefenceTurn)
         {
             Vector2 pos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, 0f);
@@ -63,9 +72,7 @@ public class InGameUI : MonoBehaviour
             }
         }
     }
-    #endregion
 
-    #region Function
     private void ButtonInit()
     {
         SingleAttack.onClick.AddListener(() =>
