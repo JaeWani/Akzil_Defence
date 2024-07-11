@@ -6,7 +6,10 @@ public class BulletBase : MonoBehaviour
 {
     #region Variable
     public GameObject target = null;
-    public float speed = 10;
+    
+    public float MoveSpeed { get; private set; }
+    public float Damage { get; private set; }
+
     private Rigidbody2D rb;
     #endregion
 
