@@ -15,10 +15,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Vector2 monsterSpawnPos = new Vector2(-2.5f, -4.5f);
 
+
+    [SerializeField] private int waveCount;
     [SerializeField] private int roundTime;
     [SerializeField] private int currentRoundTime;
     public int CurrentRoundTime { get { return currentRoundTime; } private set { currentRoundTime = value; } }
     public int RoundTime { get { return roundTime; } private set { roundTime = value; } }
+    public int WaveCount { get { return waveCount; } private set { waveCount = value; } }
 
     private WaitForSeconds SECONDS1 = new WaitForSeconds(1);
 
@@ -28,7 +31,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TurnState currentTurn = TurnState.Start;
     public static TurnState CurrentTurn { get { return Instance.currentTurn; } set { Instance.currentTurn = value; } }
 
-    private Queue<MonsterType> MonsterQueue = new Queue<MonsterType>();
+    [SerializeField] private List<MonsterBase> currentMonsterList = new List<MonsterBase>();
+
+    public Queue<MonsterType> MonsterQueue { get; private set; } = new Queue<MonsterType>();
+    public List<MonsterBase> CurrentMonsterList { get { return currentMonsterList; } private set { currentMonsterList = value; } }
 
     [Header("Attack Turn")]
     private bool selectMonster = false;
@@ -72,7 +78,17 @@ public class GameManager : MonoBehaviour
 
     private void DefenceTurn()
     {
+        WaveCount++;
         RoundTimeLimit();
+    }
+    public static void DefenceTurnSkip()
+    {
+        if (CurrentTurn == TurnState.DefenceTurn)
+        {
+            Instance.StopCoroutine(Instance.CURRENT_ROUND_COROUTINE);
+            CurrentTurn = TurnState.AttackTurn;
+            Instance.Progress(CurrentTurn);
+        }
     }
 
     private void AttackTurn()
@@ -86,6 +102,8 @@ public class GameManager : MonoBehaviour
             StopCoroutine(CURRENT_ROUND_COROUTINE);
 
             yield return StartCoroutine(Spawn(0.3f));
+
+            while (CurrentMonsterList.Count != 0) yield return null;
 
             ATTACK_ROUND_COROUTINE = null;
             CurrentTurn = TurnState.DefenceTurn;
@@ -139,7 +157,7 @@ public class GameManager : MonoBehaviour
         Instance.SpawnList = Instance.MonsterQueue.ToList();
     }
 
-    private GameObject MonsterDequeue()
+    private MonsterBase MonsterDequeue()
     {
         GameObject currentPrefab = null;
 
@@ -150,14 +168,20 @@ public class GameManager : MonoBehaviour
             case MonsterType.Boss: currentPrefab = BossMonsterPrefab; break;
         }
         Instance.SpawnList = Instance.MonsterQueue.ToList();
-        return Instantiate(currentPrefab, monsterSpawnPos, Quaternion.identity);
+        return Instantiate(currentPrefab, monsterSpawnPos, Quaternion.identity).GetComponent<MonsterBase>();
+    }
+
+    public static void SortMonsterList()
+    {
+        for (int i = 0; i < Instance.CurrentMonsterList.Count; i++) if (Instance.CurrentMonsterList[i].Health <= 0) Instance.CurrentMonsterList.RemoveAt(i);
     }
 
     IEnumerator Spawn(float delay)
     {
         for (int i = 0; i < maxMonsterNumber; i++)
         {
-            MonsterDequeue();
+            MonsterBase monster = MonsterDequeue();
+            if (monster != null) CurrentMonsterList.Add(monster);
             yield return new WaitForSeconds(delay);
         }
     }

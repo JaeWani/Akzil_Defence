@@ -5,8 +5,8 @@ using UnityEngine;
 public class BulletBase : MonoBehaviour
 {
     #region Variable
-    public GameObject target = null;
-    
+    public GameObject Target = null;
+
     public float MoveSpeed { get; private set; }
     public float Damage { get; private set; }
 
@@ -18,13 +18,32 @@ public class BulletBase : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
+
     private void Update()
     {
-        rb.velocity = (target.transform.position - transform.position) * speed;
+        if (Target != null) rb.velocity = (Target.transform.position - transform.position) * MoveSpeed;
+        else Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject == Target) Hit(other.GetComponent<MonsterBase>());
     }
     #endregion
 
     #region Function
+    public void Init(float moveSpeed, float damage, GameObject target)
+    {
+        Debug.Log(damage);
+        MoveSpeed = moveSpeed;
+        Damage = damage;
+        Target = target;
+    }
 
+    protected virtual void Hit(MonsterBase monsterBase)
+    {
+        monsterBase.TakeDamage(Damage);
+        Destroy(gameObject);
+    }
     #endregion
 }

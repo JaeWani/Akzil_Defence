@@ -21,6 +21,8 @@ public class Defence_UI : MonoBehaviour
     [SerializeField] private Button BuffAttack;
     [SerializeField] private Button RangeAttack;
 
+    [SerializeField] private Button Skip;
+
 
     #endregion
     #region Prefab Variable
@@ -61,13 +63,11 @@ public class Defence_UI : MonoBehaviour
                 {
                     currentSlot = towerSlot;
                     TowerSeletPanel.gameObject.SetActive(true);
-                    Debug.Log("활성화");
                 }
                 else
                 {
                     currentSlot = null;
                     TowerSeletPanel.gameObject.SetActive(false);
-                    Debug.Log("비활성화");
                 }
             }
         }
@@ -103,6 +103,8 @@ public class Defence_UI : MonoBehaviour
             currentSlot = null;
             TowerSeletPanel.gameObject.SetActive(false);
         });
+
+        Skip.onClick.AddListener(() => GameManager.DefenceTurnSkip());
     }
 
     #endregion 

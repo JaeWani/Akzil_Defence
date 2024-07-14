@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class SingleTower : TowerBase
 {
-    private void Update()
+    protected override void Attack()
     {
-        base.Update();
+        if (targetObject != null)
+        {
+            if (targetObject.GetComponent<MonsterBase>().CurrentType == MonsterType.Boss) SpawnBullet(20, Damage * 4);
+            else SpawnBullet(20, Damage);
+        }
     }
 }

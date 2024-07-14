@@ -11,6 +11,7 @@ public class Game_Interface_UI : MonoBehaviour
 
     [Header("Interface")]
     [SerializeField] private TextMeshProUGUI roundTimeText;
+    [SerializeField] private TextMeshProUGUI roundText;
     #endregion
 
     #region Unity_Function
@@ -19,9 +20,17 @@ public class Game_Interface_UI : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
+    private void Update()
+    {
+        SetRoundText();
+    }
     #endregion
 
     #region Function
     public static void SetRoundTime(int roundTime) => Instance.roundTimeText.text = "Next Round : " + roundTime;
+    private void SetRoundText()
+    {
+        roundText.text = GameManager.CurrentTurn == TurnState.AttackTurn ? "Round : Attack" : "Round : Defence";  
+    }
     #endregion
 }

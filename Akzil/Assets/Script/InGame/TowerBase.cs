@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using Photon.Pun.Demo.Asteroids;
 
 public enum TowerType
 {
@@ -13,14 +12,20 @@ public class TowerBase : MonoBehaviour
 {
     #region Variable
 
-    [SerializeField] private MonsterBase targetObject;
+    [SerializeField] protected MonsterBase targetObject;
     [SerializeField] private GameObject BulletPrefab; // 임시
 
     [Header("Stat")]
-    public float attackDelay;
-    public float attackRange;
-    public float damage;
 
+    [SerializeField] private float attackDelay;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float damage;
+
+    public float CurrentAttackDelay { get; private set; } = 0;
+
+    public float AttackDelay { get { return attackDelay; } private set { attackDelay = value; } }
+    public float AttackRange { get { return attackRange; } private set { attackRange = value; } }
+    public float Damage { get { return damage; } private set { damage = value; } }
     #endregion
 
     #region Unity_Function
@@ -28,12 +33,9 @@ public class TowerBase : MonoBehaviour
     protected void Update()
     {
         SetTarget();
+        AttackCoolTime();
     }
-    
-    private void FixedUpdate()
-    {
-        Attack();
-    }
+  
     private void OnDrawGizmosSelected()
     {
         Vector2 origin = transform.position;
@@ -43,12 +45,31 @@ public class TowerBase : MonoBehaviour
     #endregion
 
     #region Function
-    private void Attack()
+    protected virtual void Attack()
     {
-        if (targetObject != null) Instantiate(BulletPrefab, transform.position, Quaternion.identity).GetComponent<BulletBase>().target = targetObject.gameObject;
+        if (targetObject != null) SpawnBullet(20, Damage);
     }
 
-    private void SetTarget()
+    protected BulletBase SpawnBullet(float moveSpeed, float damage)
+    {
+       BulletBase bullet =  Instantiate(BulletPrefab, transform.position, Quaternion.identity).GetComponent<BulletBase>();
+       bullet.Init(moveSpeed, damage, targetObject.gameObject);
+
+       return bullet;
+    }
+
+    protected void AttackCoolTime()
+    {
+        CurrentAttackDelay += Time.deltaTime;
+        if (CurrentAttackDelay <= AttackDelay) return;
+        else
+        {
+            CurrentAttackDelay = 0;
+            Attack();
+        }
+    }
+
+    protected void SetTarget()
     {
         Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, attackRange);
         List<MonsterBase> mobs = new List<MonsterBase>();
