@@ -44,6 +44,7 @@ public class Defence_UI : MonoBehaviour
     private void Update()
     {
         EnableTowerPanel();
+        EnableTowerInfoPanel();
     }
     #endregion
 
@@ -71,6 +72,11 @@ public class Defence_UI : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void EnableTowerInfoPanel()
+    {
+
     }
 
     private void ButtonInit()
