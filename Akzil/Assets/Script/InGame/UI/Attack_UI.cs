@@ -42,7 +42,8 @@ public class Attack_UI : MonoBehaviour
         BossMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) GameManager.MonsterEnqueue(MonsterType.Boss); });
 
         StopAttack.onClick.AddListener(() => AttackSkillManager.StopAttack());
-        SpeedUpAttack.onClick.AddListener(() => AttackSkillManager .SpeedUpAttack());
+        SpeedUpAttack.onClick.AddListener(() => AttackSkillManager.SpeedUpAttack());
+        DelayAttack.onClick.AddListener(() => AttackSkillManager.DelayAttack());
     }
     #endregion
 }

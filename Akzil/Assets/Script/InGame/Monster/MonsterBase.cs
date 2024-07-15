@@ -40,6 +40,7 @@ public class MonsterBase : MonoBehaviour
     private void Update()
     {
         Move();
+        Arrival();
     }
     #endregion
 
@@ -64,8 +65,16 @@ public class MonsterBase : MonoBehaviour
             if (Vector2.Distance(GameManager.WayPoints[wayPointIndex], transform.position) == 0f) wayPointIndex++;
         }
     }
-
+    
     private void SetHpText() => hpText.text = Health.ToString();
+
+    private void Arrival()
+    {
+        if((Vector2)transform.position == GameManager.WayPoints[GameManager.WayPoints.Count - 1])
+        {
+            Debug.Log("게임 끝남");
+        }
+    }
 
     public void TakeDamage(float Damage)
     {

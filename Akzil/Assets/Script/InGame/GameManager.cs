@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
 
     private void DefenceTurn()
     {
+        if(AttackSkillManager.Instance.IsDelay) AttackSkillManager.EndDelayAttack();
         WaveCount++;
         RoundTimeLimit();
     }

@@ -18,7 +18,6 @@ public class TowerBase : MonoBehaviour
     [SerializeField] private GameObject BulletPrefab; // 임시
 
     [Header("Stat")]
-
     [SerializeField] protected float attackDelay;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float damage;
@@ -101,5 +100,7 @@ public class TowerBase : MonoBehaviour
             }
         }
     }
+
+    public void SetAttackDelay(float value) => AttackDelay = value;
     #endregion
 }

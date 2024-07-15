@@ -34,7 +34,6 @@ public class BulletBase : MonoBehaviour
     #region Function
     public virtual void Init(float moveSpeed, float damage, GameObject target)
     {
-        Debug.Log(damage);
         MoveSpeed = moveSpeed;
         Damage = damage;
         Target = target;

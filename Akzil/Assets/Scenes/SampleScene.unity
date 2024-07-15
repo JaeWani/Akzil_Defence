@@ -2476,9 +2476,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopDuration: 5
   stopCount: 3
-  speedUpDuration: 0
   speedUpIncreaseRate: 0
-  isSpeedUp: 0
+  isDelay: 0
+  delayRate: 30
+  originalAttackDelayList: []
 --- !u!1 &1280133759
 GameObject:
   m_ObjectHideFlags: 0
