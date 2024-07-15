@@ -7,12 +7,15 @@ public class MonsterBase : MonoBehaviour
 {
     #region Variable
 
+    private int wayPointIndex = 0;
+
     [Header("Component")]
     private Rigidbody2D rb;
     [SerializeField] private TextMeshPro hpText;
     [Header("Info")]
     [SerializeField] private MonsterType currentType;
     public MonsterType CurrentType { get { return currentType; } private set { currentType = value; } }
+    public float Step = 0;
 
     [SerializeField] private Vector2 direction = Vector2.up;
 
@@ -20,8 +23,11 @@ public class MonsterBase : MonoBehaviour
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float health;
-    public float MoveSpeed { get { return moveSpeed; } private set { moveSpeed = value; } }
+    public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     public float Health { get { return health; } private set { health = value; } }
+
+    [SerializeField] private bool isDebuff = false;
+    public bool IsDebuff { get { return isDebuff; } set { isDebuff = value; } }
     #endregion
 
     #region Unity_Function
@@ -34,7 +40,6 @@ public class MonsterBase : MonoBehaviour
     private void Update()
     {
         Move();
-        SetMoveDistance();
     }
     #endregion
 
@@ -46,16 +51,18 @@ public class MonsterBase : MonoBehaviour
 
     private void Move() // 라인 따라 움직이는 함수
     {
-        if (transform.position == new Vector3(-2.5f, -0.5f)) direction = Vector2.right;
-        else if (transform.position == new Vector3(2.5f, -0.5f)) direction = Vector2.down;
+        if (wayPointIndex < GameManager.WayPoints.Count)
+        {
+            Step = MoveSpeed * Time.deltaTime;
 
-        rb.velocity = direction * MoveSpeed;
-    }
+            Vector2 pos = Vector2.MoveTowards(transform.position, GameManager.WayPoints[wayPointIndex], Step);
 
-    private void SetMoveDistance() // 움직인 거리 계산해주는 함수
-    {
-        moveDistance += rb.velocity.x * Time.deltaTime;
-        moveDistance += rb.velocity.y * Time.deltaTime;
+            float frameDistance = Vector2.Distance(transform.position, pos);
+            moveDistance += frameDistance;
+
+            transform.position = pos;
+            if (Vector2.Distance(GameManager.WayPoints[wayPointIndex], transform.position) == 0f) wayPointIndex++;
+        }
     }
 
     private void SetHpText() => hpText.text = Health.ToString();
@@ -69,6 +76,23 @@ public class MonsterBase : MonoBehaviour
             Destroy(gameObject);
         }
         SetHpText();
+    }
+
+    public void Debuff(float rate, float time)
+    {
+        if (!IsDebuff) StartCoroutine(StartDebuff());
+
+        IEnumerator StartDebuff()
+        {
+            float originalSpeed = MoveSpeed;
+            IsDebuff = true;
+            MoveSpeed -= MoveSpeed * (rate / 100);
+
+            yield return new WaitForSeconds(time);
+
+            IsDebuff = false;
+            MoveSpeed = originalSpeed;
+        }
     }
     #endregion
 }

@@ -5,21 +5,23 @@ using UnityEditor;
 
 public enum TowerType
 {
-
+    Single, Range, Debuff, Buff
 }
 
 public class TowerBase : MonoBehaviour
 {
     #region Variable
+    public TowerType CurrentType;
+    public TowerSlot CurrentSlot;
 
     [SerializeField] protected MonsterBase targetObject;
     [SerializeField] private GameObject BulletPrefab; // 임시
 
     [Header("Stat")]
 
-    [SerializeField] private float attackDelay;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float damage;
+    [SerializeField] protected float attackDelay;
+    [SerializeField] protected float attackRange;
+    [SerializeField] protected float damage;
 
     public float CurrentAttackDelay { get; private set; } = 0;
 
@@ -30,12 +32,17 @@ public class TowerBase : MonoBehaviour
 
     #region Unity_Function
 
+    protected void Start()
+    {
+        CurrentSlot = transform.parent.GetComponent<TowerSlot>();
+    }
+
     protected void Update()
     {
         SetTarget();
         AttackCoolTime();
     }
-  
+
     private void OnDrawGizmosSelected()
     {
         Vector2 origin = transform.position;
@@ -52,10 +59,10 @@ public class TowerBase : MonoBehaviour
 
     protected BulletBase SpawnBullet(float moveSpeed, float damage)
     {
-       BulletBase bullet =  Instantiate(BulletPrefab, transform.position, Quaternion.identity).GetComponent<BulletBase>();
-       bullet.Init(moveSpeed, damage, targetObject.gameObject);
+        BulletBase bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity).GetComponent<BulletBase>();
+        bullet.Init(moveSpeed, damage, targetObject.gameObject);
 
-       return bullet;
+        return bullet;
     }
 
     protected void AttackCoolTime()
@@ -64,8 +71,11 @@ public class TowerBase : MonoBehaviour
         if (CurrentAttackDelay <= AttackDelay) return;
         else
         {
-            CurrentAttackDelay = 0;
-            Attack();
+            if (CurrentSlot.CanUse == true)
+            {
+                CurrentAttackDelay = 0;
+                Attack();
+            }
         }
     }
 

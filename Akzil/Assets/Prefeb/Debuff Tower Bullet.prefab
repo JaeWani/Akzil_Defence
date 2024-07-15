@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3708532667833812880}
   - component: {fileID: 3708532667833812887}
-  - component: {fileID: 3708532667833812883}
   - component: {fileID: 3708532667833812882}
   - component: {fileID: 3708532667833812881}
+  - component: {fileID: -1666560522599486046}
   m_Layer: 0
   m_Name: Debuff Tower Bullet
   m_TagString: Untagged
@@ -87,19 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3708532667833812883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3708532667833812886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65181a6aac2446f45bbd43139a2cae85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Target: {fileID: 0}
 --- !u!50 &3708532667833812882
 Rigidbody2D:
   serializedVersion: 4
@@ -137,3 +124,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!114 &-1666560522599486046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3708532667833812886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69aeed60303144444b30cd9e20d34ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  decreaseRate: 0
+  debuffTime: 0

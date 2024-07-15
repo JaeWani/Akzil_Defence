@@ -40,6 +40,9 @@ public class Attack_UI : MonoBehaviour
         BasicMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) GameManager.MonsterEnqueue(MonsterType.Basic); });
         SpeedMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) GameManager.MonsterEnqueue(MonsterType.Speed); });
         BossMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) GameManager.MonsterEnqueue(MonsterType.Boss); });
+
+        StopAttack.onClick.AddListener(() => AttackSkillManager.StopAttack());
+        SpeedUpAttack.onClick.AddListener(() => AttackSkillManager .SpeedUpAttack());
     }
     #endregion
 }

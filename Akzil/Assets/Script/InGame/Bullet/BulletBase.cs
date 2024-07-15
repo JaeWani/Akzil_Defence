@@ -32,7 +32,7 @@ public class BulletBase : MonoBehaviour
     #endregion
 
     #region Function
-    public void Init(float moveSpeed, float damage, GameObject target)
+    public virtual void Init(float moveSpeed, float damage, GameObject target)
     {
         Debug.Log(damage);
         MoveSpeed = moveSpeed;

@@ -13,8 +13,13 @@ public class GameManager : MonoBehaviour
     #region Variable
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private Vector2 monsterSpawnPos = new Vector2(-2.5f, -4.5f);
+    [SerializeField] private List<Vector2> wayPoints = new List<Vector2>();
+    public static List<Vector2> WayPoints => Instance.wayPoints;
 
+    [SerializeField] private List<TowerSlot> towerSlots = new List<TowerSlot>();
+    public static List<TowerSlot> TowerSlots => Instance.towerSlots;
+
+    [SerializeField] private Vector2 monsterSpawnPos = new Vector2(-2.5f, -4.5f);
 
     [SerializeField] private int waveCount;
     [SerializeField] private int roundTime;
