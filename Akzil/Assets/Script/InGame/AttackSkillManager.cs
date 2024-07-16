@@ -77,4 +77,19 @@ public class AttackSkillManager : MonoBehaviour
             if (Instance.OriginalAttackDelayList[i] != 0) GameManager.TowerSlots[i].currentTower.SetAttackDelay(Instance.OriginalAttackDelayList[i]);
         }
     }
+
+    public static void LevelDownAttack()
+    {
+        foreach(TowerSlot towerSlot in GameManager.TowerSlots)
+        {
+            if(towerSlot.currentTower != null)
+            {
+                if(towerSlot.currentTower.DamageLevel > 1)
+                {
+                    towerSlot.currentTower.DamageLevel--;
+                    towerSlot.currentTower.Damage -= towerSlot.currentTower.DamageIncreaseValue;
+                }
+            }
+        }
+    }
 }

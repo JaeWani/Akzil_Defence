@@ -44,6 +44,7 @@ public class Attack_UI : MonoBehaviour
         StopAttack.onClick.AddListener(() => AttackSkillManager.StopAttack());
         SpeedUpAttack.onClick.AddListener(() => AttackSkillManager.SpeedUpAttack());
         DelayAttack.onClick.AddListener(() => AttackSkillManager.DelayAttack());
+        LevelDownAttack.onClick.AddListener(() => AttackSkillManager.LevelDownAttack());
     }
     #endregion
 }

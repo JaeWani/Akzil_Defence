@@ -19,14 +19,28 @@ public class TowerBase : MonoBehaviour
 
     [Header("Stat")]
     [SerializeField] protected float attackDelay;
+    [SerializeField] protected int delayLevel;
+    [SerializeField] protected int maxDelayLevel;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float damage;
+    [SerializeField] protected float damageLevel;
+
 
     public float CurrentAttackDelay { get; private set; } = 0;
 
-    public float AttackDelay { get { return attackDelay; } private set { attackDelay = value; } }
+    public float AttackDelay { get { return attackDelay; } set { attackDelay = value; } }
+    public int DelayLevel { get { return delayLevel; } set { delayLevel = value; } }
+    public int MaxDelayLevel { get { return maxDelayLevel; } private set { maxDelayLevel = value; } }
     public float AttackRange { get { return attackRange; } private set { attackRange = value; } }
-    public float Damage { get { return damage; } private set { damage = value; } }
+    public float Damage { get { return damage; } set { damage = value; } }
+    public float DamageLevel { get { return damageLevel; }  set { damageLevel = value; } }
+
+    [Header("Upgrade Increase/Decrease Value")]
+    [SerializeField] private float damageIncreaseValue;
+    [SerializeField] private List<float> delayDecreaseValueList;
+
+    public float DamageIncreaseValue { get { return damageIncreaseValue; } private set { damageIncreaseValue = value; } }
+    public List<float> DelayDecreaseValue { get { return delayDecreaseValueList; } private set { delayDecreaseValueList = value; } }
     #endregion
 
     #region Unity_Function
