@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -6496389392325049342, guid: 1d983eb0aad5b2244b4797b39c385db7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102,8 +102,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1d983eb0aad5b2244b4797b39c385db7, type: 2}
+  m_sharedMaterial: {fileID: -6496389392325049342, guid: 1d983eb0aad5b2244b4797b39c385db7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -274,10 +274,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpText: {fileID: 4099137146990157041}
   currentType: 2
+  Step: 0
   direction: {x: 0, y: 1}
   moveDistance: 0
   moveSpeed: 0.5
   health: 100
+  isDebuff: 0
 --- !u!50 &8627212628354248053
 Rigidbody2D:
   serializedVersion: 4

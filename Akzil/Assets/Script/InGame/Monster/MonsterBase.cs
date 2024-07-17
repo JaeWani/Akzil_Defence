@@ -56,13 +56,13 @@ public class MonsterBase : MonoBehaviour
         {
             Step = MoveSpeed * Time.deltaTime;
 
-            Vector2 pos = Vector2.MoveTowards(transform.position, GameManager.WayPoints[wayPointIndex], Step);
+            Vector2 pos = Vector2.MoveTowards(transform.position, GameManager.WayPoints[wayPointIndex].position, Step);
 
             float frameDistance = Vector2.Distance(transform.position, pos);
             moveDistance += frameDistance;
 
             transform.position = pos;
-            if (Vector2.Distance(GameManager.WayPoints[wayPointIndex], transform.position) == 0f) wayPointIndex++;
+            if (Vector2.Distance(GameManager.WayPoints[wayPointIndex].position, transform.position) == 0f) wayPointIndex++;
         }
     }
     
@@ -70,7 +70,7 @@ public class MonsterBase : MonoBehaviour
 
     private void Arrival()
     {
-        if((Vector2)transform.position == GameManager.WayPoints[GameManager.WayPoints.Count - 1])
+        if(transform.position == GameManager.WayPoints[GameManager.WayPoints.Count - 1].position)
         {
             Debug.Log("게임 끝남");
         }
