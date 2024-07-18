@@ -9,8 +9,9 @@ public class Attack_UI : MonoBehaviour
     #region Variable
     public static Attack_UI Instance { get; private set; }
 
-    [Header ("UI")]
+    [Header("UI")]
     [SerializeField] private TextMeshProUGUI AttackerGoldText;
+    [SerializeField] private TextMeshProUGUI AttackRoundMonsterCount;
 
     [Header("Monster UI")]
     [SerializeField] private Button BasicMonster;
@@ -35,17 +36,19 @@ public class Attack_UI : MonoBehaviour
     {
         ButtonInit();
     }
-    private void Update() {
+    private void Update()
+    {
         AttackerGoldText.text = GameManager.Instance.AttackerGold + "G";
+        AttackRoundMonsterCount.text = "소환 가능한 몹 : " + (GameManager.Instance.maxMonsterNumber - GameManager.Instance.CurrentMonsterNumber);
     }
     #endregion
 
     #region Function
     private void ButtonInit()
     {
-        BasicMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) GameManager.MonsterEnqueue(MonsterType.Basic); });
-        SpeedMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) GameManager.MonsterEnqueue(MonsterType.Speed); });
-        BossMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) GameManager.MonsterEnqueue(MonsterType.Boss); });
+        BasicMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) { GameManager.MonsterEnqueue(MonsterType.Basic); GameManager.Instance.CurrentMonsterNumber++; } });
+        SpeedMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) { GameManager.MonsterEnqueue(MonsterType.Speed); GameManager.Instance.CurrentMonsterNumber++; } });
+        BossMonster.onClick.AddListener(() => { if (GameManager.CurrentTurn == TurnState.AttackTurn) { GameManager.MonsterEnqueue(MonsterType.Boss); GameManager.Instance.CurrentMonsterNumber++; } });
 
         StopAttack.onClick.AddListener(() => AttackSkillManager.StopAttack());
         SpeedUpAttack.onClick.AddListener(() => AttackSkillManager.SpeedUpAttack());

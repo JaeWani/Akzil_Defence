@@ -16,6 +16,12 @@ public class Game_Interface_UI : MonoBehaviour
 
     [SerializeField] private RectTransform roundStartEmotion;
     [SerializeField] private TextMeshProUGUI roundStartEmotionText;
+
+    [SerializeField] private Image WinPanel;
+    [SerializeField] private TextMeshProUGUI winText;
+    [SerializeField] private TextMeshProUGUI winText2;
+    [SerializeField] private TextMeshProUGUI masterRound;
+    [SerializeField] private TextMeshProUGUI userRound;
     #endregion
 
     #region Unity_Function
@@ -53,6 +59,29 @@ public class Game_Interface_UI : MonoBehaviour
             roundStartEmotion.DOAnchorPosX(+1080, 0.5f);
             yield return new WaitForSeconds(0.5f + 1);
             roundStartEmotion.DOAnchorPosX(-1090, 0);
+        }
+    }
+    public void GameOver()
+    {
+        WinPanel.gameObject.SetActive(true);
+        SoundManager.Instance.Play("UM",false);
+        GameManager.Instance.UserRound = GameManager.Instance.WaveCount;
+        Time.timeScale = 0.1f;
+        if(GameManager.Instance.MasterRound > GameManager.Instance.UserRound)
+        {
+            winText.text = "최고의 악질";
+            winText2.text = "최고의 악질";
+
+            masterRound.text = "내 라운드 : " + GameManager.Instance.MasterRound;
+            userRound.text = "상대 라운드 : " + GameManager.Instance.UserRound;
+        }
+        else 
+        {
+            winText.text = "그냥 악질";
+            winText2.text = "그냥 악질";
+
+            masterRound.text = "내 라운드 : " + GameManager.Instance.MasterRound;
+            userRound.text = "상대 라운드 : " + GameManager.Instance.UserRound;
         }
     }
     #endregion

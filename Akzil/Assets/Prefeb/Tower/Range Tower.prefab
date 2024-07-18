@@ -103,14 +103,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.45588234, y: 0.45588234}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45, y: 0.45}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
 --- !u!114 &6204410275033548090
 MonoBehaviour:
@@ -129,6 +129,7 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   BulletPrefab: {fileID: 0}
   attackDelay: 0
+  originalAttackDelay: 0
   delayLevel: 0
   maxDelayLevel: 0
   attackRange: 0

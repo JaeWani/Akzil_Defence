@@ -8,6 +8,7 @@ public class MonsterBase : MonoBehaviour
     #region Variable
 
     private int wayPointIndex = 0;
+    [SerializeField] private int giveGold = 0;
 
     [Header("Component")]
     private Rigidbody2D rb;
@@ -35,11 +36,13 @@ public class MonsterBase : MonoBehaviour
     {
         ComponentInit();
         SetHpText();
+        Health *= GameManager.Instance.WaveCount;
     }
 
     private void Update()
     {
         Move();
+        SetHpText();
         Arrival();
     }
     #endregion
@@ -72,7 +75,8 @@ public class MonsterBase : MonoBehaviour
     {
         if(transform.position == GameManager.WayPoints[GameManager.WayPoints.Count - 1].position)
         {
-            Debug.Log("게임 끝남");
+            if(!GameManager.Instance.IsChange) GameManager.Change();
+            else Game_Interface_UI.Instance.GameOver();
         }
     }
 
@@ -81,11 +85,16 @@ public class MonsterBase : MonoBehaviour
         Health -= Damage;
         if (Health <= 0)
         {
+            SoundManager.Instance.Play("HIT",false);
             GameManager.SortMonsterList();
+            if(GameManager.Instance.currentTypeState == TypeState.Defencer) GameManager.Instance.masterGold += giveGold;
+            else GameManager.Instance.userGold += giveGold;
             Destroy(gameObject);
         }
         SetHpText();
     }
+
+    public void Remove() => GameManager.Instance.CurrentMonsterList.Remove(this);
 
     public void Debuff(float rate, float time)
     {

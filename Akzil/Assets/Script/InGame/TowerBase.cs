@@ -19,6 +19,7 @@ public class TowerBase : MonoBehaviour
 
     [Header("Stat")]
     [SerializeField] protected float attackDelay;
+    [SerializeField] protected float originalAttackDelay;
     [SerializeField] protected int delayLevel;
     [SerializeField] protected int maxDelayLevel;
     [SerializeField] protected float attackRange;
@@ -28,7 +29,8 @@ public class TowerBase : MonoBehaviour
 
     public float CurrentAttackDelay { get; private set; } = 0;
 
-    public float AttackDelay { get { return attackDelay; } set { attackDelay = value; } }
+    public float AttackDelay { get { return attackDelay; } set { attackDelay = value; OrignalAttackDelay = attackDelay; if(value <= 0) attackDelay = 0.05f; } }
+    public float OrignalAttackDelay { get { return originalAttackDelay; } set { originalAttackDelay = value; } }
     public int DelayLevel { get { return delayLevel; } set { delayLevel = value; } }
     public int MaxDelayLevel { get { return maxDelayLevel; } private set { maxDelayLevel = value; } }
     public float AttackRange { get { return attackRange; } private set { attackRange = value; } }
@@ -45,7 +47,7 @@ public class TowerBase : MonoBehaviour
 
     #region Unity_Function
 
-    protected void Start()
+    protected virtual void Start()
     {
         CurrentSlot = transform.parent.GetComponent<TowerSlot>();
     }

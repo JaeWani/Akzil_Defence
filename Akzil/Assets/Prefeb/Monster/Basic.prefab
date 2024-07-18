@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4423704e827bee468c109f9747975b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  giveGold: 3
   hpText: {fileID: 4613458316418653727}
   currentType: 0
   Step: 0
@@ -213,7 +214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6496389392325049342, guid: 1d983eb0aad5b2244b4797b39c385db7, type: 2}
+  - {fileID: -1684386654329833723, guid: 37da094fbc8c39f42a22dc73cf60847d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -257,8 +258,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1d983eb0aad5b2244b4797b39c385db7, type: 2}
-  m_sharedMaterial: {fileID: -6496389392325049342, guid: 1d983eb0aad5b2244b4797b39c385db7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 37da094fbc8c39f42a22dc73cf60847d, type: 2}
+  m_sharedMaterial: {fileID: -1684386654329833723, guid: 37da094fbc8c39f42a22dc73cf60847d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -298,7 +299,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
