@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Realtime;
 using UnityEngine;
 
 
@@ -9,16 +10,50 @@ public enum MonsterType { Basic, Speed, Boss }
 
 public enum TurnState { Start, AttackTurn, DefenceTurn, End }
 
-public enum PlayerState { Master , User }
+public enum PlayerState { Master, User }
+public enum TypeState { Attacker, Defencer }
 
 public class GameManager : MonoBehaviour
 {
     #region Variable
     public static GameManager Instance { get; private set; }
 
-    [Header ("동기화")]
-    public int MasterGold = 0;
-    public int UserGold = 0;
+    [Header("동기화")]
+    public int masterGold = 0;
+    public int userGold = 0;
+
+    public int AttackerGold
+    {
+        get
+        {
+            if (currentTypeState == TypeState.Attacker) return masterGold; 
+            else return userGold;
+        }
+        set 
+        { 
+            if (currentTypeState == TypeState.Attacker) masterGold = value; 
+            else userGold = value;
+        }
+    }
+
+    public int DefencerGold
+    {
+        get
+        {
+            if (currentTypeState == TypeState.Attacker) return userGold; 
+            else return masterGold;
+        }
+        set 
+        { 
+            if (currentTypeState == TypeState.Attacker) userGold = value; 
+            else masterGold = value;
+        }
+    }
+
+    public PlayerState currentPlayerState = PlayerState.Master;
+    public TypeState currentTypeState = TypeState.Defencer;
+
+    public bool IsChange = false;
 
     [SerializeField] private List<Transform> wayPoints = new List<Transform>();
     public static List<Transform> WayPoints => Instance.wayPoints;
@@ -27,12 +62,13 @@ public class GameManager : MonoBehaviour
     public static List<TowerSlot> TowerSlots => Instance.towerSlots;
 
     [SerializeField] private Transform monsterSpawnPos;
+    [SerializeField] private Transform homePos;
 
     [SerializeField] private int waveCount;
-    [SerializeField] private int roundTime;
-    [SerializeField] private int currentRoundTime;
-    public int CurrentRoundTime { get { return currentRoundTime; } private set { currentRoundTime = value; } }
-    public int RoundTime { get { return roundTime; } private set { roundTime = value; } }
+    [SerializeField] private float roundTime;
+    [SerializeField] private float currentRoundTime;
+    public float CurrentRoundTime { get { return currentRoundTime; } private set { currentRoundTime = value; } }
+    public float RoundTime { get { return roundTime; } private set { roundTime = value; } }
     public int WaveCount { get { return waveCount; } private set { waveCount = value; } }
 
     private WaitForSeconds SECONDS1 = new WaitForSeconds(1);
@@ -70,7 +106,15 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        DefenceTurn();
+        StartMotion();
+    }
+    private void Update() 
+    {
+        Debug.Log("Attacker : " + AttackerGold);
+        Debug.Log("Defencer : " + DefencerGold);
+
+        monsterSpawnPos.Rotate(0,0,100 * Time.deltaTime);
+        homePos.Rotate(0,0,100 * Time.deltaTime);
     }
     #endregion
 
@@ -85,12 +129,17 @@ public class GameManager : MonoBehaviour
 
     private void StartMotion()
     {
-
+        StartCoroutine(Motion());
+        IEnumerator Motion()
+        {
+            yield return Game_Interface_UI.StartRoundEmotion("당신은 이제 수비자입니다!",90);
+            DefenceTurn();
+        }
     }
 
     private void DefenceTurn()
     {
-        if(AttackSkillManager.Instance.IsDelay) AttackSkillManager.EndDelayAttack();
+        if (AttackSkillManager.Instance.IsDelay) AttackSkillManager.EndDelayAttack();
         WaveCount++;
         RoundTimeLimit();
     }
@@ -108,9 +157,10 @@ public class GameManager : MonoBehaviour
     {
         selectMonster = false;
         ATTACK_ROUND_COROUTINE = StartCoroutine(StartTurn());
-        RoundTimeLimit();
         IEnumerator StartTurn()
         {
+            yield return Game_Interface_UI.StartRoundEmotion("라운드" + WaveCount, 150);
+            RoundTimeLimit();
             while (!selectMonster) yield return null; // 몬스터 선택하지 않을 시, 선택 할 때 까지 대기
             StopCoroutine(CURRENT_ROUND_COROUTINE);
 
@@ -130,11 +180,11 @@ public class GameManager : MonoBehaviour
         CURRENT_ROUND_COROUTINE = StartCoroutine(TimeLimit());
         IEnumerator TimeLimit()
         {
-            for (int i = 0; i < RoundTime; i++)
+            while (CurrentRoundTime < RoundTime)
             {
-                yield return SECONDS1;
-                CurrentRoundTime++;
-                Game_Interface_UI.SetRoundTime(CurrentRoundTime);
+                yield return null;
+                CurrentRoundTime += Time.deltaTime;
+                Game_Interface_UI.SetRoundTime(CurrentRoundTime, RoundTime);
             }
 
             if (CurrentTurn == TurnState.AttackTurn)

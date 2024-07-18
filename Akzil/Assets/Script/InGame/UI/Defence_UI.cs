@@ -16,6 +16,7 @@ public class Defence_UI : MonoBehaviour
     #region UI Variable
     [Header("UI")]
     [SerializeField] private Button Skip;
+    [SerializeField] private TextMeshProUGUI DefencerGoldText;
 
     [Header("Tower Select Panel")]
     [SerializeField] private Image TowerSelectPanel;
@@ -60,6 +61,7 @@ public class Defence_UI : MonoBehaviour
     {
         EnableTowerPanel();
         EnableTowerInfoPanel();
+        DefencerGoldText.text = GameManager.Instance.DefencerGold + "G";
     }
     #endregion
 

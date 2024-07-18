@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Attack_UI : MonoBehaviour
 {
     #region Variable
     public static Attack_UI Instance { get; private set; }
+
+    [Header ("UI")]
+    [SerializeField] private TextMeshProUGUI AttackerGoldText;
 
     [Header("Monster UI")]
     [SerializeField] private Button BasicMonster;
@@ -31,7 +35,9 @@ public class Attack_UI : MonoBehaviour
     {
         ButtonInit();
     }
-
+    private void Update() {
+        AttackerGoldText.text = GameManager.Instance.AttackerGold + "G";
+    }
     #endregion
 
     #region Function
