@@ -68,14 +68,14 @@ public class MonsterBase : MonoBehaviour
             if (Vector2.Distance(GameManager.WayPoints[wayPointIndex].position, transform.position) == 0f) wayPointIndex++;
         }
     }
-    
+
     private void SetHpText() => hpText.text = Health.ToString();
 
     private void Arrival()
     {
-        if(transform.position == GameManager.WayPoints[GameManager.WayPoints.Count - 1].position)
+        if (transform.position == GameManager.WayPoints[GameManager.WayPoints.Count - 1].position)
         {
-            if(!GameManager.Instance.IsChange) GameManager.Change();
+            if (!GameManager.Instance.IsChange) GameManager.Change();
             else Game_Interface_UI.Instance.GameOver();
         }
     }
@@ -83,11 +83,11 @@ public class MonsterBase : MonoBehaviour
     public void TakeDamage(float Damage)
     {
         Health -= Damage;
+        SoundManager.Instance.Play("HIT", false);
         if (Health <= 0)
         {
-            SoundManager.Instance.Play("HIT",false);
             GameManager.SortMonsterList();
-            if(GameManager.Instance.currentTypeState == TypeState.Defencer) GameManager.Instance.masterGold += giveGold;
+            if (GameManager.Instance.currentTypeState == TypeState.Defencer) GameManager.Instance.masterGold += giveGold;
             else GameManager.Instance.userGold += giveGold;
             Destroy(gameObject);
         }

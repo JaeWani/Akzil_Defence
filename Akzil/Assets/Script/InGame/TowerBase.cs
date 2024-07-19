@@ -61,8 +61,6 @@ public class TowerBase : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Vector2 origin = transform.position;
-        Handles.color = Color.red;
-        Handles.DrawWireDisc(origin, new Vector3(0, 0, 1), attackRange);
     }
     #endregion
 

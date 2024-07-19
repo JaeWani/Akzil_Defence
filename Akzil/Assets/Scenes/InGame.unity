@@ -6637,6 +6637,10 @@ PrefabInstance:
       value: -27.41
       objectReference: {fileID: 0}
     - target: {fileID: 9171664833830710629, guid: 8c164d64c9a59e14182c45d10ceb13a2, type: 3}
+      propertyPath: endBtn
+      value: 
+      objectReference: {fileID: 1521768553}
+    - target: {fileID: 9171664833830710629, guid: 8c164d64c9a59e14182c45d10ceb13a2, type: 3}
       propertyPath: winText
       value: 
       objectReference: {fileID: 725340809}

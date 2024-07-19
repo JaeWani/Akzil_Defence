@@ -137,5 +137,5 @@ MonoBehaviour:
   damageLevel: 0
   damageIncreaseValue: 0
   delayDecreaseValueList: []
-  decreaseRate: 30
+  decreaseRate: 70
   debuffTime: 5

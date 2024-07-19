@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
     {
         monsterSpawnPos.Rotate(0, 0, 100 * Time.deltaTime);
         homePos.Rotate(0, 0, 100 * Time.deltaTime);
+        Cheat();
     }
     #endregion
 
@@ -240,6 +241,7 @@ public class GameManager : MonoBehaviour
             }
 
             yield return Game_Interface_UI.StartRoundEmotion("당신은 이제 공격자 입니다.", 90);
+            Instance.StopCoroutine(Instance.CURRENT_ROUND_COROUTINE);
             Instance.currentTypeState = TypeState.Attacker;
             Instance.MasterRound = Instance.WaveCount;
             Instance.waveCount = 0;
@@ -286,6 +288,21 @@ public class GameManager : MonoBehaviour
             MonsterBase monster = MonsterDequeue();
             if (monster != null) CurrentMonsterList.Add(monster);
             yield return new WaitForSeconds(delay);
+        }
+    }
+
+    public void Cheat()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            foreach(var item in towerSlots)
+            {
+                if(item.CurrentTower == null)
+                {
+                    Defence_UI.Instance.SpawnTower(item);
+                    break;
+                }
+            }
         }
     }
     #endregion

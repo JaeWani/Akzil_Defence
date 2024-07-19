@@ -54,6 +54,10 @@ public class Defence_UI : MonoBehaviour
     #endregion
 
     #region  Unity_Function
+    private void Awake() {
+        if(Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
     private void Start()
     {
         mainCamera = Camera.main;
@@ -217,6 +221,16 @@ public class Defence_UI : MonoBehaviour
                 }
             }
         });
+    }
+
+    public void SpawnTower(TowerSlot towerSlot)
+    {
+        TowerBase tower = Instantiate(SinglePrefab, towerSlot.transform).GetComponent<TowerBase>();
+        tower.name = "싱글 타워";
+        towerSlot.CurrentTower = tower;
+        currentSlot = null;
+        GameManager.Instance.CurrentRoundInstallTowerCount--;
+        TowerSelectPanel.gameObject.SetActive(false);
     }
 
     #endregion 
