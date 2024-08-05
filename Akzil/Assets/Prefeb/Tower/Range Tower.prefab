@@ -124,16 +124,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedb7f6fe9bd7824bb8a523533fec19b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentType: 0
+  CurrentType: 1
   CurrentSlot: {fileID: 0}
   targetObject: {fileID: 0}
-  BulletPrefab: {fileID: 0}
-  attackDelay: 0
-  originalAttackDelay: 0
+  BulletPrefab: {fileID: 3708532667833812886, guid: 7e8e79615ddeb8948a1030237cf09d89, type: 3}
+  attackDelay: 0.8
+  originalAttackDelay: 0.8
   delayLevel: 0
   maxDelayLevel: 0
-  attackRange: 0
-  damage: 0
+  attackRange: 3
+  damage: 5
   damageLevel: 0
   damageIncreaseValue: 0
   delayDecreaseValueList: []
+  range: 0.7
