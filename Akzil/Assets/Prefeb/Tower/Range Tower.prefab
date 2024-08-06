@@ -128,13 +128,18 @@ MonoBehaviour:
   CurrentSlot: {fileID: 0}
   targetObject: {fileID: 0}
   BulletPrefab: {fileID: 3708532667833812886, guid: 7e8e79615ddeb8948a1030237cf09d89, type: 3}
-  attackDelay: 0.8
-  originalAttackDelay: 0.8
+  attackDelay: 1
+  originalAttackDelay: 1
   delayLevel: 0
-  maxDelayLevel: 0
+  maxDelayLevel: 5
   attackRange: 3
   damage: 5
-  damageLevel: 0
-  damageIncreaseValue: 0
-  delayDecreaseValueList: []
+  damageLevel: 1
+  damageIncreaseValue: 2.5
+  delayDecreaseValueList:
+  - 0.3
+  - 0.2
+  - 0.1
+  - 0.1
+  - 0.1
   range: 0.7
